@@ -1,0 +1,15 @@
+<?xml version="1.0" standalone="yes"?>
+<SpisakZvanja>
+  <Zvanje>
+    <Sifra>1</Sifra>
+    <Naziv>Docent</Naziv>
+  </Zvanje>
+    <Zvanje>
+    <Sifra>2</Sifra>
+    <Naziv>Vanredni profesor</Naziv>
+  </Zvanje>
+ <Zvanje>
+    <Sifra>3</Sifra>
+    <Naziv>Redovni profesor</Naziv>
+  </Zvanje>
+</SpisakZvanja>
