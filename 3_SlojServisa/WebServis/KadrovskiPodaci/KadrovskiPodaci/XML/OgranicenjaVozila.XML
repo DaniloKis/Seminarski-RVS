@@ -1,0 +1,15 @@
+<?xml version="1.0" standalone="yes"?>
+<SpisakOgranicenja>
+  <OgranicenjeVozila>
+    <SifraVozila>MOT</SifraVozila>
+    <GranicaTezine>5</GranicaTezine>
+  </OgranicenjeVozila>
+  <OgranicenjeVozila>
+    <SifraVozila>KOM</SifraVozila>
+    <GranicaTezine>30</GranicaTezine>
+  </OgranicenjeVozila>
+  <OgranicenjeVozila>
+    <SifraVozila>KAM</SifraVozila>
+    <GranicaTezine>1000</GranicaTezine>
+  </OgranicenjeVozila>
+</SpisakOgranicenja>
