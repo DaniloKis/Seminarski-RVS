@@ -1,0 +1,27 @@
+@model KorisnickiInterfejs.ViewModels.TipVozilaViewModel
+@{
+    ViewBag.Title = "Izmeni tip vozila";
+}
+
+<h2>Izmeni tip vozila</h2>
+
+@using (Html.BeginForm("Izmeni", "TipVozila", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    <table>
+        <tr>
+            <td style="width:120px;">Sifra</td>
+            @* sifra je primarni kljuc - ne menja se, salje se kao hidden *@
+            <td>@Model.Sifra @Html.HiddenFor(m => m.Sifra)</td>
+        </tr>
+        <tr>
+            <td>Naziv</td>
+            <td>@Html.TextBoxFor(m => m.Naziv) @Html.ValidationMessageFor(m => m.Naziv, "", new { @class = "greska" })</td>
+        </tr>
+    </table>
+
+    <br />
+    <input type="submit" value="Sacuvaj izmene" />
+    @Html.ActionLink("Nazad", "Index", "TipVozila")
+}

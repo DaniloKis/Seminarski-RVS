@@ -1,0 +1,89 @@
+@model KorisnickiInterfejs.ViewModels.PaketIzmenaViewModel
+@{
+    ViewBag.Title = "Izmena paketa";
+}
+
+<h2>Izmena paketa</h2>
+
+@using (Html.BeginForm("Izmeni", "PaketMvc", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(false, "", new { @class = "greska" })
+
+    @* kod paketa je kljuc - ne menja se *@
+    @Html.HiddenFor(m => m.KodPaketa)
+
+    <table>
+        <tr>
+            <td>Kod paketa</td>
+            <td>@Model.KodPaketa</td>
+            <td></td>
+        </tr>
+        <tr><td colspan="3"><span class="zaglavljeGrupe">POSILJALAC</span></td></tr>
+        <tr>
+            <td>@Html.LabelFor(m => m.PosiljalacIme)</td>
+            <td>@Html.TextBoxFor(m => m.PosiljalacIme)</td>
+            <td>@Html.ValidationMessageFor(m => m.PosiljalacIme, "", new { @class = "greska" })</td>
+        </tr>
+        <tr>
+            <td>@Html.LabelFor(m => m.PosiljalacAdresa)</td>
+            <td>@Html.TextBoxFor(m => m.PosiljalacAdresa)</td>
+            <td>@Html.ValidationMessageFor(m => m.PosiljalacAdresa, "", new { @class = "greska" })</td>
+        </tr>
+        <tr>
+            <td>@Html.LabelFor(m => m.PosiljalacGrad)</td>
+            <td>@Html.TextBoxFor(m => m.PosiljalacGrad)</td>
+            <td>@Html.ValidationMessageFor(m => m.PosiljalacGrad, "", new { @class = "greska" })</td>
+        </tr>
+        <tr><td colspan="3"><span class="zaglavljeGrupe">PRIMALAC</span></td></tr>
+        <tr>
+            <td>@Html.LabelFor(m => m.PrimalacIme)</td>
+            <td>@Html.TextBoxFor(m => m.PrimalacIme)</td>
+            <td>@Html.ValidationMessageFor(m => m.PrimalacIme, "", new { @class = "greska" })</td>
+        </tr>
+        <tr>
+            <td>@Html.LabelFor(m => m.PrimalacAdresa)</td>
+            <td>@Html.TextBoxFor(m => m.PrimalacAdresa)</td>
+            <td>@Html.ValidationMessageFor(m => m.PrimalacAdresa, "", new { @class = "greska" })</td>
+        </tr>
+        <tr>
+            <td>@Html.LabelFor(m => m.PrimalacPostanskiBroj)</td>
+            <td>@Html.TextBoxFor(m => m.PrimalacPostanskiBroj)</td>
+            <td>@Html.ValidationMessageFor(m => m.PrimalacPostanskiBroj, "", new { @class = "greska" })</td>
+        </tr>
+        <tr>
+            <td>@Html.LabelFor(m => m.PrimalacGrad)</td>
+            <td>@Html.TextBoxFor(m => m.PrimalacGrad)</td>
+            <td>@Html.ValidationMessageFor(m => m.PrimalacGrad, "", new { @class = "greska" })</td>
+        </tr>
+        <tr><td colspan="3"><span class="zaglavljeGrupe">DETALJI PAKETA</span></td></tr>
+        <tr>
+            <td>@Html.LabelFor(m => m.Tezina)</td>
+            <td>@Html.TextBoxFor(m => m.Tezina)</td>
+            <td>@Html.ValidationMessageFor(m => m.Tezina, "", new { @class = "greska" })</td>
+        </tr>
+        <tr>
+            <td>@Html.LabelFor(m => m.OznakaUpozorenja)</td>
+            <td>@Html.TextBoxFor(m => m.OznakaUpozorenja)</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>@Html.LabelFor(m => m.Cena)</td>
+            <td>@Html.TextBoxFor(m => m.Cena)</td>
+            <td>@Html.ValidationMessageFor(m => m.Cena, "", new { @class = "greska" })</td>
+        </tr>
+        <tr>
+            <td>Trenutni tip vozila</td>
+            <td>@Model.DodeljeniTipVozila <em>(preracunava se prema tezini pri snimanju)</em></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>
+                <input type="submit" value="SNIMI IZMENU" />
+                @Html.ActionLink("Odustani", "Index", "PaketMvc")
+            </td>
+            <td></td>
+        </tr>
+    </table>
+}

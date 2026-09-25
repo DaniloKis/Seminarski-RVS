@@ -1,0 +1,13 @@
+@{
+    ViewBag.Title = "Dobrodosli";
+}
+
+<h2>Dobrodosli, administratore @ViewBag.ImePrezime!</h2>
+
+<p>Izaberite opciju iz menija (Paketi ili Tipovi vozila).</p>
+
+<ul>
+    <li>@Html.ActionLink("Tabelarni prikaz paketa", "Index", "PaketMvc")</li>
+    <li>@Html.ActionLink("Unos paketa", "Unos", "PaketMvc")</li>
+    <li>@Html.ActionLink("Tipovi vozila", "Index", "TipVozila")</li>
+</ul>

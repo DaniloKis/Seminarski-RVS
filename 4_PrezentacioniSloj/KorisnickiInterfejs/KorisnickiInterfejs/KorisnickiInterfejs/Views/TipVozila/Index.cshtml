@@ -1,0 +1,43 @@
+@model System.Collections.Generic.List<KlasePodataka.TipVozilaEntity>
+@{
+    ViewBag.Title = "Tipovi vozila";
+}
+
+<h2>Tipovi vozila</h2>
+
+<p>@Html.ActionLink("Dodaj tip vozila", "Dodaj", "TipVozila")</p>
+
+<table class="mvc-tabela">
+    <thead>
+        <tr>
+            <th>Sifra</th>
+            <th>Naziv</th>
+            <th>Akcije</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model == null || Model.Count == 0)
+        {
+            <tr><td colspan="3">Nema tipova vozila.</td></tr>
+        }
+        else
+        {
+            foreach (var tip in Model)
+            {
+                <tr>
+                    <td>@tip.Sifra</td>
+                    <td>@tip.Naziv</td>
+                    <td>
+                        @Html.ActionLink("Izmeni", "Izmeni", "TipVozila", new { sifra = tip.Sifra }, null)
+                        &nbsp;|&nbsp;
+                        @using (Html.BeginForm("Obrisi", "TipVozila", new { sifra = tip.Sifra }, FormMethod.Post, new { style = "display:inline;", onsubmit = "return confirm('Obrisati tip vozila?');" }))
+                        {
+                            @Html.AntiForgeryToken()
+                            <input type="submit" value="Obrisi" />
+                        }
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>

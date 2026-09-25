@@ -1,0 +1,61 @@
+@model System.Collections.Generic.List<KlasePodataka.PaketKlasa>
+@{
+    ViewBag.Title = "Paketi";
+}
+
+<h2>Paketi</h2>
+
+<p>
+    @Html.ActionLink("Unos novog paketa", "Unos", "PaketMvc") |
+    @Html.ActionLink("Stampa spiska", "Stampa", "PaketMvc", new { filter = ViewBag.Filter }, null)
+</p>
+
+@* filtriranje po kodu paketa *@
+@using (Html.BeginForm("Index", "PaketMvc", FormMethod.Get))
+{
+    <span>Kod paketa: </span>
+    <input type="text" name="filter" value="@ViewBag.Filter" />
+    <input type="submit" value="FILTRIRAJ" />
+    @Html.ActionLink("SVI", "Index", "PaketMvc")
+}
+
+<table class="mvc-tabela">
+    <thead>
+        <tr>
+            <th>Kod paketa</th>
+            <th>Posiljalac</th>
+            <th>Primalac</th>
+            <th>Tezina (kg)</th>
+            <th>Tip vozila</th>
+            <th>Akcije</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model == null || Model.Count == 0)
+        {
+            <tr><td colspan="6">Nema paketa za prikaz.</td></tr>
+        }
+        else
+        {
+            foreach (var paket in Model)
+            {
+                <tr>
+                    <td>@paket.KodPaketa</td>
+                    <td>@paket.PosiljalacIme</td>
+                    <td>@paket.PrimalacIme</td>
+                    <td>@paket.Tezina</td>
+                    <td>@(paket.TipVozila != null ? paket.TipVozila.Naziv : "")</td>
+                    <td>
+                        @Html.ActionLink("detalji", "MasterDetail", "PaketMvc", new { kod = paket.KodPaketa }, null) |
+                        @Html.ActionLink("izmeni", "Izmeni", "PaketMvc", new { kod = paket.KodPaketa }, null) |
+                        @using (Html.BeginForm("Obrisi", "PaketMvc", new { kod = paket.KodPaketa }, FormMethod.Post, new { style = "display:inline", onsubmit = "return confirm('Obrisati paket?');" }))
+                        {
+                            @Html.AntiForgeryToken()
+                            <button type="submit" class="link-dugme">obrisi</button>
+                        }
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>

@@ -1,0 +1,69 @@
+@model KorisnickiInterfejs.ViewModels.PaketUnosViewModel
+@{
+    ViewBag.Title = "Unos paketa";
+}
+
+<h2>Unos paketa</h2>
+
+@using (Html.BeginForm("Unos", "PaketMvc", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    <table style="width:100%;">
+        <tr>
+            <td class="zaglavljeGrupe" colspan="2">KOD PAKETA</td>
+        </tr>
+        <tr>
+            <td style="width:200px;">Kod paketa</td>
+            <td>@Html.TextBoxFor(m => m.KodPaketa) @Html.ValidationMessageFor(m => m.KodPaketa, "", new { @class = "greska" })</td>
+        </tr>
+
+        <tr><td class="zaglavljeGrupe" colspan="2">POSILJALAC</td></tr>
+        <tr><td>Ime</td><td>@Html.TextBoxFor(m => m.PosiljalacIme) @Html.ValidationMessageFor(m => m.PosiljalacIme, "", new { @class = "greska" })</td></tr>
+        <tr><td>Adresa</td><td>@Html.TextBoxFor(m => m.PosiljalacAdresa) @Html.ValidationMessageFor(m => m.PosiljalacAdresa, "", new { @class = "greska" })</td></tr>
+        <tr><td>Grad</td><td>@Html.TextBoxFor(m => m.PosiljalacGrad) @Html.ValidationMessageFor(m => m.PosiljalacGrad, "", new { @class = "greska" })</td></tr>
+
+        <tr><td class="zaglavljeGrupe" colspan="2">PRIMALAC</td></tr>
+        <tr><td>Ime</td><td>@Html.TextBoxFor(m => m.PrimalacIme) @Html.ValidationMessageFor(m => m.PrimalacIme, "", new { @class = "greska" })</td></tr>
+        <tr><td>Adresa</td><td>@Html.TextBoxFor(m => m.PrimalacAdresa) @Html.ValidationMessageFor(m => m.PrimalacAdresa, "", new { @class = "greska" })</td></tr>
+        <tr><td>Postanski broj</td><td>@Html.TextBoxFor(m => m.PrimalacPostanskiBroj) @Html.ValidationMessageFor(m => m.PrimalacPostanskiBroj, "", new { @class = "greska" })</td></tr>
+        <tr><td>Grad</td><td>@Html.TextBoxFor(m => m.PrimalacGrad) @Html.ValidationMessageFor(m => m.PrimalacGrad, "", new { @class = "greska" })</td></tr>
+
+        <tr><td class="zaglavljeGrupe" colspan="2">DETALJI PAKETA</td></tr>
+        <tr><td>Tezina (kg)</td><td>@Html.TextBoxFor(m => m.Tezina) @Html.ValidationMessageFor(m => m.Tezina, "", new { @class = "greska" })</td></tr>
+        <tr><td>Oznaka upozorenja</td><td>@Html.TextBoxFor(m => m.OznakaUpozorenja)</td></tr>
+        <tr><td>Cena (RSD)</td><td>@Html.TextBoxFor(m => m.Cena) @Html.ValidationMessageFor(m => m.Cena, "", new { @class = "greska" })</td></tr>
+    </table>
+
+    <hr />
+    <div class="zaglavljeGrupe">STAVKE PAKETA (detalji)</div>
+    <p>Artikli koji se nalaze u paketu. Snimaju se zajedno sa paketom u jednoj transakciji.</p>
+
+    <div id="stavkeKontejner"></div>
+
+    <button type="button" onclick="dodajStavku()">Dodaj stavku</button>
+    <br /><br />
+
+    <input type="submit" value="SNIMI" />
+    @Html.ActionLink("PONISTI", "Unos", "PaketMvc")
+}
+
+@* sablon jednog reda stavke *@
+<template id="stavkaSablon">
+    <div class="stavka-red">
+        <label>Naziv artikla</label>
+        <input type="text" data-polje="NazivArtikla" />
+        &nbsp;
+        <label>Kolicina</label>
+        <input type="number" data-polje="Kolicina" value="1" style="width:70px;" />
+        &nbsp;
+        <label>Tezina (kg)</label>
+        <input type="text" data-polje="TezinaStavke" value="0" style="width:90px;" />
+        &nbsp;
+        <button type="button" onclick="obrisiStavku(this)">Obrisi</button>
+    </div>
+</template>
+
+@section scripts {
+    <script src="@Url.Content("~/Scripts/paketStavke.js")"></script>
+}

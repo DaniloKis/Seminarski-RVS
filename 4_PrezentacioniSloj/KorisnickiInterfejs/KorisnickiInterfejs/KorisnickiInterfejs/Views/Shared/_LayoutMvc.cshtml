@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>@ViewBag.Title - Kurirska sluzba</title>
+    <link href="@Url.Content("~/Styles/Site.css")" rel="stylesheet" type="text/css" />
+    <style type="text/css">
+        .poruka { padding: 8px 12px; margin: 10px 0; border: 1px solid #cbb58f; }
+        .poruka-uspeh { background: #e6f0d8; color: #3b5a1f; }
+        .poruka-greska { background: #f3ddd6; color: #a3341f; }
+        .mvc-tabela { border-collapse: collapse; width: 100%; }
+        .mvc-tabela th, .mvc-tabela td { border: 1px solid #cbb58f; padding: 4px 8px; text-align: left; }
+        .mvc-tabela th { background: #7a5a38; color: #f0e6d2; }
+        .greska { color: #a3341f; }
+        .zaglavljeGrupe { font-weight: bold; font-size: medium; }
+        .stavka-red { border: 1px solid #cbb58f; padding: 8px; margin-bottom: 6px; background: #fbf6ec; }
+        .link-dugme { background: none; border: none; color: #7a4b1f; cursor: pointer; padding: 0; font: inherit; text-decoration: underline; }
+        .menu ul { list-style: none; margin: 0; padding: 0; }
+        .menu > ul > li { position: relative; display: inline-block; vertical-align: top; }
+        .menu ul li ul { display: none; position: absolute; left: 0; top: 100%; z-index: 1000; min-width: 240px; padding: 0; margin: 0; }
+        .menu ul li:hover > ul { display: block; }
+        .menu ul li ul li { display: block; }
+    </style>
+</head>
+<body>
+    @{
+        var uloga = (Context.Session != null ? Context.Session["Uloga"] as string : null);
+        bool prijavljen = !string.IsNullOrEmpty(uloga);
+        bool jeAdmin = (uloga == "Admin");
+        var imePrezime = (Context.Session != null ? Context.Session["KorisnikImePrezime"] as string : null);
+    }
+    <div class="page">
+        <div class="header">
+            <div class="title">
+                <h1>KURIRSKA SLUZBA</h1>
+            </div>
+            <div class="loginDisplay">
+                @if (prijavljen)
+                {
+                    <span>@imePrezime (@uloga) &nbsp;</span>
+                    <a href="@Url.Action("Odjava", "Nalog")">ODJAVA</a>
+                }
+                else
+                {
+                    <a href="@Url.Action("Prijava", "Nalog")">PRIJAVA</a>
+                }
+            </div>
+            <div class="clear hideSkiplink">
+                <div class="menu">
+                    <ul>
+                        <li><a href="@Url.Action("Index", "Pocetna")">Pocetna</a></li>
+                        <li><a href="@Url.Action("Autor", "Pocetna")">Autor</a></li>
+                        @if (prijavljen)
+                        {
+                            <li>
+                                <a href="#">PAKETI</a>
+                                <ul>
+                                    @if (jeAdmin)
+                                    {
+                                        <li><a href="@Url.Action("Index", "PaketMvc")">Tabelarni prikaz paketa</a></li>
+                                    }
+                                    <li><a href="@Url.Action("Unos", "PaketMvc")">Unos paketa</a></li>
+                                    @if (jeAdmin)
+                                    {
+                                        <li><a href="@Url.Action("Stampa", "PaketMvc", new { filter = "0" })">Stampa spiska paketa</a></li>
+                                    }
+                                </ul>
+                            </li>
+                            if (jeAdmin)
+                            {
+                                <li>
+                                    <a href="#">TIPOVI VOZILA</a>
+                                    <ul>
+                                        <li><a href="@Url.Action("Index", "TipVozila")">Spisak tipova vozila</a></li>
+                                        <li><a href="@Url.Action("Dodaj", "TipVozila")">Unos tipa vozila</a></li>
+                                    </ul>
+                                </li>
+                            }
+                        }
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="main">
+            @if (TempData["Poruka"] != null)
+            {
+                var tip = (TempData["PorukaTip"] != null && TempData["PorukaTip"].ToString() == "greska")
+                    ? "poruka-greska" : "poruka-uspeh";
+                <div class="poruka @tip">@TempData["Poruka"]</div>
+            }
+
+            @RenderBody()
+        </div>
+        <div class="clear"></div>
+    </div>
+    <div class="footer">
+        Kurirska sluzba - seminarski rad, 2026.
+    </div>
+
+    @RenderSection("scripts", required: false)
+</body>
+</html>

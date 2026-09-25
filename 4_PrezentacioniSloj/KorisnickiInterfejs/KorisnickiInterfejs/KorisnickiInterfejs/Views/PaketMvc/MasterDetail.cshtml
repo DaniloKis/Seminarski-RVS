@@ -1,0 +1,52 @@
+@model KorisnickiInterfejs.ViewModels.PaketMasterDetailViewModel
+@{
+    ViewBag.Title = "Detalji paketa";
+}
+
+<h2>Detalji paketa</h2>
+
+@* MASTER - podaci o paketu *@
+<table class="mvc-tabela" style="width:auto;">
+    <tr><th>Kod paketa</th><td>@Model.KodPaketa</td></tr>
+    <tr><th>Posiljalac</th><td>@Model.PosiljalacIme</td></tr>
+    <tr><th>Primalac</th><td>@Model.PrimalacIme (@Model.PrimalacGrad)</td></tr>
+    <tr><th>Tezina (kg)</th><td>@Model.Tezina</td></tr>
+    <tr><th>Cena (RSD)</th><td>@Model.Cena</td></tr>
+    <tr><th>Tip vozila</th><td>@Model.NazivVozila</td></tr>
+</table>
+
+<h3>Stavke paketa</h3>
+
+@* DETALJI - stavke paketa *@
+<table class="mvc-tabela">
+    <thead>
+        <tr>
+            <th>Redni broj</th>
+            <th>Naziv artikla</th>
+            <th>Kolicina</th>
+            <th>Tezina (kg)</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model.Stavke == null || Model.Stavke.Count == 0)
+        {
+            <tr><td colspan="4">Nema stavki za ovaj paket.</td></tr>
+        }
+        else
+        {
+            int redniBroj = 1;
+            foreach (var stavka in Model.Stavke)
+            {
+                <tr>
+                    <td>@redniBroj</td>
+                    <td>@stavka.NazivArtikla</td>
+                    <td>@stavka.Kolicina</td>
+                    <td>@stavka.TezinaStavke</td>
+                </tr>
+                redniBroj++;
+            }
+        }
+    </tbody>
+</table>
+
+<p>@Html.ActionLink("Nazad na spisak", "Index", "PaketMvc")</p>

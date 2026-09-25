@@ -1,0 +1,26 @@
+@model KorisnickiInterfejs.ViewModels.TipVozilaViewModel
+@{
+    ViewBag.Title = "Dodaj tip vozila";
+}
+
+<h2>Dodaj tip vozila</h2>
+
+@using (Html.BeginForm("Dodaj", "TipVozila", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    <table>
+        <tr>
+            <td style="width:120px;">Sifra</td>
+            <td>@Html.TextBoxFor(m => m.Sifra) @Html.ValidationMessageFor(m => m.Sifra, "", new { @class = "greska" })</td>
+        </tr>
+        <tr>
+            <td>Naziv</td>
+            <td>@Html.TextBoxFor(m => m.Naziv) @Html.ValidationMessageFor(m => m.Naziv, "", new { @class = "greska" })</td>
+        </tr>
+    </table>
+
+    <br />
+    <input type="submit" value="Snimi" />
+    @Html.ActionLink("Nazad", "Index", "TipVozila")
+}

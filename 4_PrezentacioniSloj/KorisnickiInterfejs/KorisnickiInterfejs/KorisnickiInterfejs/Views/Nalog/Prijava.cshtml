@@ -1,0 +1,30 @@
+@model KorisnickiInterfejs.ViewModels.PrijavaViewModel
+@{
+    ViewBag.Title = "Prijava";
+}
+
+<h2>Prijava korisnika</h2>
+
+@using (Html.BeginForm("Prijava", "Nalog", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(false, "", new { @class = "greska" })
+
+    <table>
+        <tr>
+            <td>@Html.LabelFor(m => m.KorisnickoIme)</td>
+            <td>@Html.TextBoxFor(m => m.KorisnickoIme)</td>
+            <td>@Html.ValidationMessageFor(m => m.KorisnickoIme, "", new { @class = "greska" })</td>
+        </tr>
+        <tr>
+            <td>@Html.LabelFor(m => m.Sifra)</td>
+            <td>@Html.PasswordFor(m => m.Sifra)</td>
+            <td>@Html.ValidationMessageFor(m => m.Sifra, "", new { @class = "greska" })</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><input type="submit" value="PRIJAVA" /></td>
+            <td></td>
+        </tr>
+    </table>
+}
